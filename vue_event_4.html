@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="lib/vue.js"></script>
+  <style>
+    .inner{
+      background-color: lightblue;
+      width: 200px;
+      height: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- .stop -->
+    <!-- <div class="inner" @click = divClick>
+      <button @click.stop = btnClick >提交</button>
+    </div> -->
+    <!-- .prevent -->
+    <!-- <a href="https://www.baidu.com" @click.prevent = aClick>go to 百度</a> -->
+    <!-- .capture -->
+    <!-- <div class="inner" @click.capture = divClick>
+      <button @click = btnClick >提交</button>
+    </div> -->
+    <!-- .self -->
+    <!-- <div class="inner" @click.self = divClick>
+      <button @click = btnClick >提交</button>
+    </div> -->
+    <!-- .once -->
+    <a href="https://www.baidu.com" @click.prevent.once = aClick>go to 百度</a>
+  </div>
+  <script>
+
+    var vm = new Vue({
+      el : "#app",
+      data : {
+      },
+      methods : {
+        divClick(){
+          console.log("这是div事件");
+        },
+        btnClick(){
+          console.log("这是btn事件");
+        },
+        aClick(){
+          console.log("这是a事件");
+        }
+      }
+    })
+  </script>
+</body>
+</html>

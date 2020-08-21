@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="lib/vue.js"></script>
+  <style>
+    .red{
+      color: lightpink;
+    }
+    .italic{
+      font-style: italic;
+    }
+    .weight{
+      font-weight: 200;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- <p :class = ['red','italic']>vue方法添加class属性1</p>
+    <p :class = {red:true,italic:false}>vue方法添加class属性2</p>
+    <p :class = style>vue方法添加class属性3</p>
+    <p :class = ['red',false?'italic':'weight']>vue方法添加class属性4</p> -->
+
+    <p :style = 'style2'>Vue方法添加style样式</p>
+  </div>
+</body>
+<script>
+  var vm = new Vue({
+    el : '#app',
+    data : {
+      style : {red:false,italic:true},
+      style2 : {color:'red','font-weight':200}
+    }
+  })
+</script>
+</html>
