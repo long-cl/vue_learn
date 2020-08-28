@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="lib/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- 数组遍历 -->
+
+    <ul v-for="(item , i ,key) in list">
+      <li> item--------{{item}}, i--------{{i}}, key--------{{key}} </li>
+    </ul>
+
+    <!-- 对象数组遍历 -->
+    <ul v-for="(item , i ,key) in listObj">
+      <li> item.id--------{{item.id}}, item.name--------{{item.name}}, i--------{{i}}, key--------{{key}} </li>
+    </ul>
+
+    <!-- 对象遍历 -->
+    <q v-for = "(val ,key ,index) in listO">val--------{{val}}, key--------{{key}}, index--------{{index}}</q>
+    <!-- <q v-for = "index in listO"> index--------{{index}}</q> -->
+
+    <!-- 数字遍历 -->
+    <q v-for = "count in 10"> {{count}} </q>
+    <!-- 注意：从1开始，而不是从0开始 -->
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el : "#app",
+      data : {
+        list : [1,2,3,4,5],
+        listObj : [
+          {id : 1 , name : "z1"},
+          {id : 2 , name : "z2"},
+          {id : 3 , name : "z3"},
+          {id : 4 , name : "z4"},
+          {id : 5 , name : "z5"},
+        ],
+        listO : {
+          id : 1,
+          name : 'ls',
+          gender : 'female'
+        }
+      }
+
+    })
+  </script>
+</body>
+</html>
