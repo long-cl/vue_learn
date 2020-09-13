@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <label v-show = flag v-fontsize = "28">
+            width=device-width, initial-scale=1.0
+        </label>
+        <br>
+        <label>
+            enter触发事件：
+            <!-- <input type="button" value="显示和隐藏" @keyup.enter="flag =! flag"  v-focus v-color="'red'" > -->
+            <input type="button" value="显示和隐藏" @keyup.enter="flag =! flag"  v-focus v-color="{'color': 'red'}" >
+        </label>
+        <br>
+    </div>
+
+<script>
+
+    // 使用Vue.directive()定义全局指令
+    // 1.参数1：是定义指令的名称，不需要加v-前缀
+    // 2.参数2：是一个对象，，有一些相关的钩子函数，在函数的特定阶段，执行相关的操作
+
+    // 钩子函数
+    /* 
+        bind : function(){};   //每当指令绑定到元素上的时候执行一次
+        inserted : function(){} // 元素插入到dom中的时候，会执行一次
+        updated : function(){}  //  当vnode更新的时候，会执行，有可能执行多次
+    
+     */
+
+
+    Vue.directive('focus',{
+        inserted : function(el){
+            el.focus();
+        }
+    })
+
+    var vm = new Vue({
+        el : "#app",
+        data : {
+            flag : false
+        },
+        methods : {
+
+        },
+        filters : {
+
+        },
+        // 定义私有的指令
+        directives : {
+            'color' : {
+                bind : function(el, binding){
+                    // el.style.color = binding.value;
+                    el.style.color = binding.value.color;
+                    console.log(binding.value);
+                    console.log(binding.value.color);
+                    console.log(binding);
+                }
+            },
+            'fontsize' : function(el, binding){
+                el.style.fontSize = binding.value + 'px';
+            }
+        }
+    })
+</script>
+</body>
+</html>

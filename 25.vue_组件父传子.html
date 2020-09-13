@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>document</title>
+  <script src="lib/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <child1 v-bind:parmsg= "msg" @func="show"></child1>
+  </div>
+
+  <template id="com1">
+    <div>
+      <p>{{parmsg}}</p>
+      <input type="button" value="子组件" @click = "btn">
+    </div>
+  </template>
+
+<script>
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      msg: '这是父组件的msg',
+      dataNull : ''
+    },
+    methods: {
+      // 通过参数，子组件调用父组件的函数  可以获取子组件的数据
+      show(){
+        console.log('122112321')
+      }
+    },
+    filters: {
+    },
+    components: {
+      child1: {
+        template: '#com1',
+        data: function(){
+          return {
+            son: {name: 'ls', age: '15'}
+          }
+        },
+        // 注意： 
+        // 1.组件中的 所有 props 中的数据，都是通过 父组件传递给子组件的
+        // 2.不能驼峰命令法   parmsg全部小写
+        // props 中的数据，都是只读的，无法重新赋值
+        props: ['parmsg'],
+        methods: {
+          btn(){
+            console.log('asasassaasasassa')
+          }
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>

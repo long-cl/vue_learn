@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p class="msg"> {{msg}} </p>
+        <input type="button" value="修改msg" @click="msg = !msg">
+    </div>
+
+<script>
+    var vm = new Vue({
+        el : '#app',
+        data : {
+            msg : true,
+        },
+        methods : {
+            show(){
+                console.log('show');
+            }
+        },
+        beforeCreate() {
+            // beforeCreate 这是第一个生命周期函数 ，表示实例完全创建之前，会实行该函数
+            // 注意 ： 执行beforeCreate 生命周期函数时，data 和 methods 中的数据都未初始化
+            // console.log(this.msg);  // -> undefined
+            // this.show();       // ->this.show is not a function
+        },
+
+        // 最开始能拿到vue实例中的数据
+        created() {
+            // created 这是第二个生命周期函数 ，表示实例完全创建后，会实行该函数
+            // 注意 ：  执行created 生命周期函数时，data 和 methods 中的数据已初始化
+            console.log(this.msg);  // -> ok
+            this.show();       // -> show
+        },
+        beforeMount() {  //Mount : 挂载
+            // beforeMount 这是第三个生命周期函数 ，表示实例数据未挂载前，会实行该函数
+            // 注意 ： 不能拿取在页面中实例的数据源
+            console.log(document.getElementsByClassName("msg")[0].textContent);
+            // html => ok
+            // console.log =>{{msg}}
+        },
+
+        // 最开始能拿到vue实例数据挂载在界面中的数据
+        mounted() {
+            // mounted 这是第四个生命周期函数 ，表示实例数据挂载后，会实行该函数
+            // 注意 ： 执行mounted生命周期函数时，实例数据已初始化到页面
+            console.log(document.getElementsByClassName("msg")[0].textContent);
+        },
+        beforeUpdate() {
+            // 根据data的改变，而选择性的触发0次到多次
+            // beforeUpdate 这是第五个生命周期函数 ，界面的数据未被更新，但是数据被更新了
+            console.log("界面上元素的内容"+document.getElementsByClassName("msg")[0].textContent);
+            // => ok   =>未更新到最新的数据
+            console.log("data中的内容"+this.msg);
+            // => no => 当前最新的数据
+        },
+        updated() {
+            console.log("界面上元素的内容"+document.getElementsByClassName("msg")[0].textContent);
+            // => no   =>界面中的数据已更新
+            console.log("data中的内容"+this.msg);
+            // => no => 当前最新的数据
+        }
+    })
+</script>
+</body>
+</html>

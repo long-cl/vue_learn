@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" >
+  <script src="lib/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+
+    
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">添加品牌</h3>
+        </div>
+        <div class="panel-body form-inline">
+
+          <label>
+            Id:
+            <input type="text" class="form-control" v-model = 'id'>
+          </label>
+
+          <label>
+            Name:
+            <input type="text" class="form-control" v-model = 'name' @keyup.enter = add>
+          </label>
+
+          <input type="button" value="添加" class="btn btn-primary" @click = add>
+
+          <label>
+            搜索名称关键字:
+            <input type="text" class="form-control" v-model = 'keywords'>
+          </label>
+
+        </div>
+    </div>
+    
+
+    <table class="table table-bordered table-hover table-striped">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Ctime</th>
+          <th>Operation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--  -->
+        <tr v-for = 'item in search(keywords)' :key = 'item.id'>
+          <td>{{ item.id }}</td>
+          <td v-text=item.name></td>
+          <td>{{ item.ctime | timeModule | addTime}}</td>
+          <td>
+            <a href="javascript:;" @click.prevent = del(item.id)>删除</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+
+
+<script>
+  // 全局过滤器的定义与使用
+  Vue.filter("addTime",function(data){
+    return data + " - "+ data ;
+  })
+
+  Vue.config.keyCodes.f2 = 113;
+
+  var vm = new Vue({
+    el : "#app",
+    data : {
+      id : null,
+      name : null,
+      list : [
+        {id: 1, name: 'ls', ctime: new Date()},
+        {id: 2, name: 'ls9', ctime: new Date()}
+      ],
+      keywords : ''
+
+    },
+    methods : {
+      add(){
+        if(this.id != null && this.name != null && this.id in this.list == false){
+          this.list.push({id: this.id, name: this.name, ctime: new Date()})  ;
+          this.id = this.name = null;
+        }
+      },
+      
+      del(id){
+
+        // -------------------------------------方法一：--------------------------
+        /* this.list.some((item, i)=>{
+          if(item.id == id){
+            this.list.splice(i, 1);
+            // 在数组的some方法中，如果使用 return true，就会立即终止这个数组的后续循环。
+            return true;
+          }
+        }) */
+        
+       // -------------------------------------方法二：--------------------------
+        var index = this.list.findIndex(item =>{
+          if(item.id == id){
+            return true;
+          }
+        })
+        this.list.splice(index, 1);   
+
+
+      },
+      
+      search(keywords){
+
+        // -------------------------------------方法一：--------------------------
+
+        var newList = [];
+        this.list.forEach(item => {
+          if(item.name.indexOf(keywords) != -1){
+            newList.push(item);
+          }
+        });
+        
+        return newList;
+      }
+
+      // -------------------------------------方法二：--------------------------
+    },
+    filters : {
+      timeModule : function(){
+        var t = new Date();
+        var y = t.getFullYear();
+        var m = (t.getMonth() + 1).toString().padStart(2,0);
+        var d = t.getDate().toString().padStart(2,0);
+        return `${y}-${m}-${d}`;
+      }
+    }
+  })
+</script>
+</body>
+</html>

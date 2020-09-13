@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="lib/vue.js"></script>
+  <title></title>
+</head>
+<body>
+  <div id="app">
+    <mycom></mycom>
+    <my-com></my-com>
+    <mycom3></mycom3>
+
+  </div>
+
+  <!-- 组件三 -->
+  <template id="com3">
+    <div>
+      <h3>组件三中的内容</h3>
+      <span>组件三中的span</span>
+    </div>
+  </template>
+  <!-- 组件三 -->
+
+<script>
+  // 全局组件的三种定义方式
+
+  //组件方法一
+  var com1 = Vue.extend({
+    template: "<h3>组件一中的内容</h3>"
+  })
+  Vue.component("mycom",com1);
+
+  // 组件方法二
+  Vue.component("myCom",{
+    template: 
+    `<div>
+      <h3>组件二中的内容</h3>
+      <span>组件二中的span</span>
+    </div>`
+  })
+
+  // 组件方法三
+  Vue.component("mycom3",{
+    template: "#com3"
+   
+  })
+
+  var vm = new Vue({
+    el : "#app",
+    data : {
+    },
+    methods: {
+    },
+    filters: {
+    },
+    directives: {
+
+    },
+    component: {
+
+    }
+  })
+</script>
+</body>
+</html>
